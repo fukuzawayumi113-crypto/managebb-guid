@@ -1,0 +1,1198 @@
+<title>マネージベースボール攻略</title>
+<style>
+:root {
+  --bg: #F8F3EA;
+  --surface: #EDE7D9;
+  --surface2: #DDD5C4;
+  --text: #0D1B2A;
+  --text-sub: #3A4F62;
+  --text-muted: #6B7E8F;
+  --accent: #C8102E;
+  --accent2: #3A6186;
+  --gold: #A0782A;
+  --bar-bg: #D5CFC4;
+  --border: rgba(13,27,42,0.12);
+  --nav-bg: rgba(248,243,234,0.95);
+  --code-bg: #E5DFCE;
+  --rule: #C8102E;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1B2A;
+    --surface: #152233;
+    --surface2: #1E3245;
+    --text: #EDE7D9;
+    --text-sub: #A8BCC8;
+    --text-muted: #6E8799;
+    --accent: #E8303F;
+    --accent2: #5A90B8;
+    --gold: #C9A84C;
+    --bar-bg: #1E3245;
+    --border: rgba(255,255,255,0.08);
+    --nav-bg: rgba(13,27,42,0.96);
+    --code-bg: #111E2D;
+    --rule: #E8303F;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1B2A;
+  --surface: #152233;
+  --surface2: #1E3245;
+  --text: #EDE7D9;
+  --text-sub: #A8BCC8;
+  --text-muted: #6E8799;
+  --accent: #E8303F;
+  --accent2: #5A90B8;
+  --gold: #C9A84C;
+  --bar-bg: #1E3245;
+  --border: rgba(255,255,255,0.08);
+  --nav-bg: rgba(13,27,42,0.96);
+  --code-bg: #111E2D;
+  --rule: #E8303F;
+}
+:root[data-theme="light"] {
+  --bg: #F8F3EA;
+  --surface: #EDE7D9;
+  --surface2: #DDD5C4;
+  --text: #0D1B2A;
+  --text-sub: #3A4F62;
+  --text-muted: #6B7E8F;
+  --accent: #C8102E;
+  --accent2: #3A6186;
+  --gold: #A0782A;
+  --bar-bg: #D5CFC4;
+  --border: rgba(13,27,42,0.12);
+  --nav-bg: rgba(248,243,234,0.95);
+  --code-bg: #E5DFCE;
+  --rule: #C8102E;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--accent);
+  padding: 0 24px;
+}
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 52px;
+}
+.nav-logo {
+  font-family: "Impact", "Arial Narrow", Arial, sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-right: 28px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.nav-links {
+  display: flex;
+  gap: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+}
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a {
+  display: block;
+  padding: 0 14px;
+  height: 52px;
+  line-height: 52px;
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-sub);
+  white-space: nowrap;
+  transition: color 0.15s, border-bottom 0.15s;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+.nav-links a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+/* HERO */
+.hero {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 56px 24px 48px;
+}
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.hero-title {
+  font-family: "Impact", "Arial Narrow", Arial, sans-serif;
+  font-size: clamp(42px, 8vw, 80px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.hero-title span { color: var(--accent); }
+.hero-desc {
+  max-width: 560px;
+  font-size: 15px;
+  color: var(--text-sub);
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+.hero-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pill {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 4px 12px;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+/* MAIN LAYOUT */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* SECTION */
+section {
+  padding-top: 64px;
+}
+.section-label {
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: "Impact", "Arial Narrow", Arial, sans-serif;
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 3px solid var(--rule);
+}
+
+/* STAT GRID */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--border);
+  padding: 16px;
+  border-radius: 1px;
+}
+.stat-card.primary { border-top-color: var(--accent); }
+.stat-card.secondary { border-top-color: var(--accent2); }
+.stat-card.neutral { border-top-color: var(--gold); }
+.stat-abbr {
+  font-family: "Courier New", monospace;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.stat-name {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  font-family: "Arial Narrow", Arial, sans-serif;
+}
+.stat-desc {
+  font-size: 13.5px;
+  color: var(--text-sub);
+  line-height: 1.5;
+}
+
+/* IMPACT BARS */
+.impact-table {
+  margin-bottom: 40px;
+}
+.impact-row {
+  display: grid;
+  grid-template-columns: 80px 140px 1fr 80px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.impact-row:first-child { border-top: 1px solid var(--border); }
+.impact-tag {
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--text);
+}
+.impact-label {
+  font-size: 13px;
+  color: var(--text-sub);
+}
+.impact-bar-wrap {
+  background: var(--bar-bg);
+  height: 10px;
+  border-radius: 1px;
+  overflow: hidden;
+}
+.impact-bar {
+  height: 100%;
+  border-radius: 1px;
+  transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bar-positive { background: var(--accent); }
+.bar-negative { background: var(--accent2); }
+.bar-weak { background: var(--text-muted); opacity: 0.5; }
+.impact-value {
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  color: var(--gold);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.impact-section-head {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 16px 0 4px;
+  grid-column: 1 / -1;
+}
+
+/* FORMULA BLOCK */
+.formula-block {
+  background: var(--code-bg);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  margin: 20px 0;
+  overflow-x: auto;
+}
+.formula-block code {
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.8;
+  white-space: pre;
+  display: block;
+}
+.formula-block .hl { color: var(--accent); font-weight: bold; }
+.formula-block .hl2 { color: var(--gold); }
+
+/* PRIORITY TABLE */
+.priority-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  overflow-x: auto;
+  display: block;
+}
+.priority-table th {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: left;
+  padding: 8px 16px 8px 0;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.priority-table td {
+  padding: 10px 16px 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text-sub);
+  vertical-align: top;
+}
+.priority-table td:first-child {
+  font-family: "Courier New", monospace;
+  color: var(--text);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.rank {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-family: "Impact", Arial, sans-serif;
+  font-size: 13px;
+  border-radius: 1px;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.rank-s { background: var(--accent); color: #fff; }
+.rank-a { background: var(--gold); color: var(--bg); }
+.rank-b { background: var(--accent2); color: #fff; }
+.rank-c { background: var(--surface2); color: var(--text-muted); }
+
+/* TIP BOXES */
+.tip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.tip-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: 1px;
+}
+.tip-head {
+  font-family: "Impact", "Arial Narrow", Arial, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.tip-body {
+  font-size: 13.5px;
+  color: var(--text-sub);
+  line-height: 1.6;
+}
+.tip-body strong { color: var(--text); }
+
+/* AGE CHART */
+.age-chart {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px;
+  margin: 24px 0;
+  overflow-x: auto;
+}
+.age-chart-title {
+  font-family: "Arial Narrow", Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.age-bars {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 80px;
+}
+.age-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 28px;
+}
+.age-bar-inner {
+  width: 100%;
+  background: var(--accent2);
+  border-radius: 1px 1px 0 0;
+  transition: background 0.2s;
+}
+.age-bar-inner.peak { background: var(--accent); }
+.age-bar-inner.young { background: var(--gold); }
+.age-num {
+  font-family: "Courier New", monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* WOBA TABLE */
+.woba-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.woba-event {
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  width: 60px;
+  color: var(--text);
+}
+.woba-weight {
+  font-family: "Courier New", monospace;
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--gold);
+  width: 50px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.woba-bar-wrap {
+  flex: 1;
+  background: var(--bar-bg);
+  height: 8px;
+  border-radius: 1px;
+}
+.woba-bar {
+  height: 100%;
+  background: var(--gold);
+  border-radius: 1px;
+}
+
+/* HYOKA(SBV) BLOCK */
+.sbv-explain {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+.sbv-explain h3 {
+  font-family: "Impact", "Arial Narrow", Arial, sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+p { margin-bottom: 14px; color: var(--text-sub); font-size: 15px; }
+p:last-child { margin-bottom: 0; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .impact-row { grid-template-columns: 60px 100px 1fr 64px; gap: 8px; }
+  .hero-title { font-size: 42px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact-bar { transition: none; }
+}
+</style>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">ManageBB</span>
+    <ul class="nav-links">
+      <li><a href="#stats">指標一覧</a></li>
+      <li><a href="#impact">計算式</a></li>
+      <li><a href="#batters">打者</a></li>
+      <li><a href="#pitchers">投手</a></li>
+      <li><a href="#team">チーム編成</a></li>
+      <li><a href="#metrics">高度指標</a></li>
+      <li><a href="#qa">Q&amp;A</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Official Strategy Guide</div>
+    <h1 class="hero-title">マネージ<br><span>ベースボール</span><br>攻略</h1>
+    <p class="hero-desc">OOTP ライクな野球 GM シミュレーション。どのスタットが試合を動かし、どう選手を育て、どう勝つか——計算式から逆引きした完全攻略ガイド。</p>
+    <div class="hero-pills">
+      <span class="pill">CON 最優先</span>
+      <span class="pill">PV/BRK は三振で覚醒</span>
+      <span class="pill">ピーク 27〜30 歳</span>
+      <span class="pill">wOBA で評価</span>
+      <span class="pill">評価値で起用判断</span>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ========== STATS ========== -->
+  <section id="stats">
+    <div class="section-label">Section 01</div>
+    <h2 class="section-title">指標一覧</h2>
+
+    <p>打者と投手にはそれぞれ独立したスタットセットがある。各スタットは 10〜99 の範囲で管理され、試合シミュレーションの確率計算に直接入力される。</p>
+
+    <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">打者スタット</div>
+    <div class="stat-grid">
+      <div class="stat-card primary">
+        <div class="stat-abbr">CON</div>
+        <div class="stat-name">Contact</div>
+        <div class="stat-desc">ヒット確率の最大係数。75 以上で+5%ボーナス発動。三振率も抑える（con/eye が高いほど三振しにくい）。全スタット中、単体効果が最強。</div>
+      </div>
+      <div class="stat-card secondary">
+        <div class="stat-abbr">POW</div>
+        <div class="stat-name">Power</div>
+        <div class="stat-desc">本塁打・長打率を決定。二乗で効くため高値ほど加速度的に伸びる（pow²/353）。</div>
+      </div>
+      <div class="stat-card secondary">
+        <div class="stat-abbr">EYE</div>
+        <div class="stat-name">Plate Eye</div>
+        <div class="stat-desc">四球率に直接効く。係数 0.13 と大きく、投手 CTL より影響が大きい場面も。CON と同様、三振も減らす。</div>
+      </div>
+      <div class="stat-card neutral">
+        <div class="stat-abbr">SPD</div>
+        <div class="stat-name">Speed</div>
+        <div class="stat-desc">盗塁成功率と、走者として出た後の進塁打・タッチアップ成功率に使用。相手投手 OVR と守備力に対抗。</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-abbr">DEF</div>
+        <div class="stat-name">Defense</div>
+        <div class="stat-desc">守備時にエラーや内野安打の発生率に影響。ポジション適性と組み合わせて評価。</div>
+      </div>
+    </div>
+
+    <div style="font-family:'Arial Narrow',Arial,sans-serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin:24px 0 10px;">投手スタット</div>
+    <div class="stat-grid">
+      <div class="stat-card primary">
+        <div class="stat-abbr">PQ</div>
+        <div class="stat-name">Pitch Quality</div>
+        <div class="stat-desc">被安打を削る最強投手スタット。高いほど打者の CON 効果を抑制し、ヒット確率を直接下げる。三振率にも副次的に寄与（重み0.15）。</div>
+      </div>
+      <div class="stat-card primary">
+        <div class="stat-abbr">OVR</div>
+        <div class="stat-name">Overall</div>
+        <div class="stat-desc">安打・本塁打・盗塁すべてを一括圧縮する万能スタット。先発の柱に最も必要。</div>
+      </div>
+      <div class="stat-card secondary">
+        <div class="stat-abbr">CTL</div>
+        <div class="stat-name">Control</div>
+        <div class="stat-desc">四球率を下げる。自滅を防ぐ最重要スタット。三振率にも副次的に寄与（重み0.15）。</div>
+      </div>
+      <div class="stat-card primary">
+        <div class="stat-abbr">PV</div>
+        <div class="stat-name">Pitch Velocity</div>
+        <div class="stat-desc">被安打抑制では単体効果が弱い（+10で-0.18%）が、<strong>三振率を決めるメイン要素</strong>（重み0.35）。BRK とセットで評価すべき最重要級スタットに格上げ。</div>
+      </div>
+      <div class="stat-card primary">
+        <div class="stat-abbr">BRK</div>
+        <div class="stat-name">Breaking Ball</div>
+        <div class="stat-desc">PV と同じ立ち位置。被安打抑制は弱いが、<strong>三振率のメイン要素</strong>（重み0.35）。PV+BRK が両方高い投手は三振を量産できる。</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-abbr">DEF</div>
+        <div class="stat-name">Defense</div>
+        <div class="stat-desc">フィールド処理に影響。効果係数は小さい（×0.02）が守備力の底上げに貢献。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== IMPACT ========== -->
+  <section id="impact">
+    <div class="section-label">Section 02</div>
+    <h2 class="section-title">計算式の影響力</h2>
+
+    <p>各スタットを基準値 60 から +10 した場合の確率変化を実測した。この数値がそのまま選手獲得・育成の優先順位になる。</p>
+
+    <div class="formula-block">
+      <code><span class="hl">-- ヒット確率 (hP)</span>
+hP = ( <span class="hl2">batter.con</span> × (1 - (pvTerm + brk) / 1000) × 0.26
+      + (100 - <span class="hl2">pitcher.pq</span>) × 0.16 ) / 100
+hP = hP × (1.4 - <span class="hl2">pitcher.ovr</span>/90 × 0.4) × (1 - def/100 × 0.02)
+
+<span class="hl">-- 四球確率 (wP)</span>
+wP = ( (100 - <span class="hl2">pitcher.ctl</span>) × 0.055
+       + <span class="hl2">batter.eye</span> × 0.13 ) / 100
+
+<span class="hl">-- 三振確率 (kP) ― 現実のMLB平均(約22%)を基準に増減</span>
+stuff = <span class="hl2">pitcher.pv</span>×0.35 + <span class="hl2">pitcher.brk</span>×0.35 + <span class="hl2">pitcher.pq</span>×0.15 + <span class="hl2">pitcher.ctl</span>×0.15
+kP = ( 22 + (stuff-62)×0.35 - (batterAvoid-48.5)×0.35 ) / 100　※5〜45%にクランプ
+batterAvoid = <span class="hl2">batter.con</span>×0.5 + <span class="hl2">batter.eye</span>×0.5
+
+<span class="hl">-- 本塁打確率 (pb) ← ヒット成立後</span>
+pb = (<span class="hl2">batter.pow</span>²) / 353 × (1.1 - <span class="hl2">pitcher.ovr</span>/90 × 0.4)</code>
+    </div>
+
+    <div class="impact-table" id="impact-table">
+
+      <div class="impact-row">
+        <div class="impact-section-head">打者スタット (+10 時の変化)</div>
+      </div>
+
+      <div class="impact-row">
+        <div class="impact-tag">CON +10</div>
+        <div class="impact-label">ヒット率 増加</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-positive" data-pct="100" style="width:0%"></div></div>
+        <div class="impact-value">+2.31%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">CON +10</div>
+        <div class="impact-label">三振率 抑制</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-negative" data-pct="76" style="width:0%"></div></div>
+        <div class="impact-value">-1.75%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">EYE +10</div>
+        <div class="impact-label">四球率 増加</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-positive" data-pct="56" style="width:0%"></div></div>
+        <div class="impact-value">+1.30%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">EYE +10</div>
+        <div class="impact-label">三振率 抑制</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-negative" data-pct="76" style="width:0%"></div></div>
+        <div class="impact-value">-1.75%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">POW +10</div>
+        <div class="impact-label">本塁打率 増加</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-positive" data-pct="35" style="width:0%"></div></div>
+        <div class="impact-value">+0.80%</div>
+      </div>
+
+      <div class="impact-row">
+        <div class="impact-section-head">投手スタット (+10 時の変化)</div>
+      </div>
+
+      <div class="impact-row">
+        <div class="impact-tag">PQ +10</div>
+        <div class="impact-label">被安打率 抑制</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-negative" data-pct="78" style="width:0%"></div></div>
+        <div class="impact-value">-1.80%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">OVR +10</div>
+        <div class="impact-label">被安打+被本塁打 抑制</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-negative" data-pct="36" style="width:0%"></div></div>
+        <div class="impact-value">-0.83%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">CTL +10</div>
+        <div class="impact-label">与四球率 抑制</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-negative" data-pct="24" style="width:0%"></div></div>
+        <div class="impact-value">-0.55%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">CTL +10</div>
+        <div class="impact-label">奪三振率 増加</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-positive" data-pct="23" style="width:0%"></div></div>
+        <div class="impact-value">+0.53%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">PV +10</div>
+        <div class="impact-label">被安打率 抑制</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-weak" data-pct="8" style="width:0%"></div></div>
+        <div class="impact-value">-0.18%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">PV +10</div>
+        <div class="impact-label">奪三振率 増加</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-positive" data-pct="53" style="width:0%"></div></div>
+        <div class="impact-value">+1.23%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">BRK +10</div>
+        <div class="impact-label">被安打率 抑制</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-weak" data-pct="8" style="width:0%"></div></div>
+        <div class="impact-value">-0.18%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">BRK +10</div>
+        <div class="impact-label">奪三振率 増加</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-positive" data-pct="53" style="width:0%"></div></div>
+        <div class="impact-value">+1.23%</div>
+      </div>
+      <div class="impact-row">
+        <div class="impact-tag">PQ +10</div>
+        <div class="impact-label">奪三振率 増加</div>
+        <div class="impact-bar-wrap"><div class="impact-bar bar-positive" data-pct="23" style="width:0%"></div></div>
+        <div class="impact-value">+0.53%</div>
+      </div>
+    </div>
+
+    <p style="font-size:13px;color:var(--text-muted);">※ 基準値: 打者 CON/POW/EYE/SPD=60、投手 PV/CTL/BRK/PQ/OVR=60、catchMul=1.0 で計算。三振率は打者 con/eye=60・投手側は該当スタットのみ+10、他は60のまま算出。</p>
+  </section>
+
+  <!-- ========== BATTERS ========== -->
+  <section id="batters">
+    <div class="section-label">Section 03</div>
+    <h2 class="section-title">打者戦略</h2>
+
+    <p>打者獲得・育成の優先度は計算式から明確に決まる。スカウトの TSC 総合評価は参考にしつつ、個別スタットを必ず確認すること。</p>
+
+    <table class="priority-table">
+      <thead>
+        <tr>
+          <th>優先度</th>
+          <th>スタット</th>
+          <th>理由</th>
+          <th>目標値</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank rank-s">S</span></td>
+          <td>CON</td>
+          <td>ヒット確率に最大係数。75 超でボーナス発動。打率・出塁率の根幹で、三振も減らす。</td>
+          <td>75+</td>
+        </tr>
+        <tr>
+          <td><span class="rank rank-a">A</span></td>
+          <td>EYE</td>
+          <td>四球率に CTL より大きく効く。出塁率を稼いで攻撃の厚みを作り、三振も減らす。</td>
+          <td>65+</td>
+        </tr>
+        <tr>
+          <td><span class="rank rank-a">A</span></td>
+          <td>POW</td>
+          <td>長打・本塁打を決定。二乗で効くため 70 を超えると加速度的に伸びる。</td>
+          <td>70+</td>
+        </tr>
+        <tr>
+          <td><span class="rank rank-b">B</span></td>
+          <td>SPD</td>
+          <td>盗塁機会・進塁打・タッチアップに自動適用。CON/EYE が高い出塁率の高い選手に組み合わせると効果的。</td>
+          <td>60+</td>
+        </tr>
+        <tr>
+          <td><span class="rank rank-c">C</span></td>
+          <td>DEF</td>
+          <td>効果係数 0.02 と小さい。ポジション適性がある選手なら守備力も考慮する程度。</td>
+          <td>50+</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-family:'Impact','Arial Narrow',Arial,sans-serif;font-size:20px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text);margin:32px 0 12px;">POW vs EYE — どちらが強いか</h3>
+
+    <p>直感的には EYE（四球）より POW（本塁打）のほうが派手に見えるが、wOBA 換算での 1PA あたり貢献はほぼ同等。ただし <strong>条件</strong>が違う。</p>
+
+    <div style="background:var(--surface);border:1px solid var(--border);padding:20px 24px;margin:0 0 24px;overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <thead>
+          <tr>
+            <th style="font-family:'Arial Narrow',Arial,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:0 16px 10px 0;border-bottom:1px solid var(--border);">スタット</th>
+            <th style="font-family:'Arial Narrow',Arial,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:0 16px 10px 0;border-bottom:1px solid var(--border);">効果</th>
+            <th style="font-family:'Arial Narrow',Arial,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);text-align:left;padding:0 16px 10px 0;border-bottom:1px solid var(--border);">条件</th>
+            <th style="font-family:'Arial Narrow',Arial,sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);text-align:right;padding:0 0 10px;border-bottom:1px solid var(--border);white-space:nowrap;">wOBA 貢献 (+10)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px 16px 10px 0;border-bottom:1px solid var(--border);font-family:'Courier New',monospace;font-size:13px;color:var(--text);">EYE +10</td>
+            <td style="padding:10px 16px 10px 0;border-bottom:1px solid var(--border);color:var(--text-sub);">四球率 +1.30%</td>
+            <td style="padding:10px 16px 10px 0;border-bottom:1px solid var(--border);color:var(--text-sub);"><strong style="color:var(--accent2);">無条件</strong> — 常に発生</td>
+            <td style="padding:10px 0 10px;border-bottom:1px solid var(--border);text-align:right;font-family:'Courier New',monospace;color:var(--gold);font-variant-numeric:tabular-nums;">+0.0090 / PA</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px 10px 0;border-bottom:1px solid var(--border);font-family:'Courier New',monospace;font-size:13px;color:var(--text);">POW +10</td>
+            <td style="padding:10px 16px 10px 0;border-bottom:1px solid var(--border);color:var(--text-sub);">HR 確率 +0.80%（絶対値）</td>
+            <td style="padding:10px 16px 10px 0;border-bottom:1px solid var(--border);color:var(--text-sub);"><strong style="color:var(--text-muted);">ヒット後</strong> — まず安打が必要</td>
+            <td style="padding:10px 0 10px;border-bottom:1px solid var(--border);text-align:right;font-family:'Courier New',monospace;color:var(--gold);font-variant-numeric:tabular-nums;">+0.0097 / PA</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:12px;margin-bottom:0;">
+        EYE: 1.30% × 0.69（BB重み）= 0.0090 ／ POW: HR増加分が単打から本塁打に変換される差額 (2.10 − 0.89) × 0.80% = 0.0097
+      </p>
+    </div>
+
+    <div class="formula-block" style="margin-bottom:24px;">
+      <code><span class="hl">-- POW は二乗で効く → 高値ほど加速する</span>
+pow=60 → HR確率（ヒット中）≈  8.5%
+pow=70 → HR確率（ヒット中）≈ 11.6%   (+3.1pt)
+pow=80 → HR確率（ヒット中）≈ 15.1%   (+3.5pt)  ← 加速
+pow=90 → HR確率（ヒット中）≈ 19.2%   (+4.1pt)  ← さらに加速
+
+<span class="hl">-- EYE は線形で効く（スケールしない）</span>
+eye=60 → walk_base = 7.80%
+eye=70 → walk_base = 9.10%   (+1.3pt  一定)
+eye=80 → walk_base = 10.40%  (+1.3pt  一定)</code>
+    </div>
+
+    <div class="tip-grid" style="margin-bottom:0;">
+      <div class="tip-box">
+        <div class="tip-head">CON が低い打者に POW は無駄</div>
+        <div class="tip-body">POW は「ヒットになった後で HR になる確率」を上げる。CON が低くてそもそも安打が少ない選手は POW が高くても恩恵が薄い。<strong>CON を先に 65+ に上げてから POW を伸ばす</strong>のが正解。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">POW 80 超は別格</div>
+        <div class="tip-body">二乗の式により、POW 80 台からの伸びは急激になる。80 → 90 で HR 率が +4pt 増えるのは 60 → 70 の +3pt より大きい。スラッガー型は <strong>POW を 80 以上に集中投資</strong>すると爆発力が出る。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">EYE は安定出塁のベース</div>
+        <div class="tip-body">EYE の四球は CON・POW とは完全に独立した無条件の出塁手段。ランナーを溜めて次の打者の得点機を作る役割。1〜2 番打者の EYE を高めると攻撃全体の効率が上がる。</div>
+      </div>
+    </div>
+
+    <div style="height:32px;"></div>
+
+    <div class="tip-grid">
+      <div class="tip-box">
+        <div class="tip-head">CON 75 ボーナス</div>
+        <div class="tip-body">ヒット確率に<strong>+5%の乗算ボーナス</strong>が入る明確な閾値。74 と 75 では体感できる差がある。CON 74 の選手は 75 に育てる価値が高い。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">wOBA で選手評価</div>
+        <div class="tip-body">打率・本塁打より wOBA を優先して比較すること。wOBA .320 以上は主力クラス、.280 以下はスタメン落ちを検討。長打に大きな重みがかかっている。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">評価値がプラスの選手を中軸へ</div>
+        <div class="tip-body">評価値（旧SBV）は高レバレッジ局面での打点を累積する指標。プラスの選手は勝負所で決めてきた実績がある。4〜5 番打者の選定に使う。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PITCHERS ========== -->
+  <section id="pitchers">
+    <div class="section-label">Section 04</div>
+    <h2 class="section-title">投手戦略</h2>
+
+    <p>投手の優先度は打者ほど単純ではない。OVR は万能だが、失点パターンによって PQ（被安打多い）か CTL（四球自滅）かで補強先が変わる。加えて、三振率(kP)という第三の軸が PV・BRK を最重要級スタットに押し上げた。</p>
+
+    <table class="priority-table">
+      <thead>
+        <tr>
+          <th>優先度</th>
+          <th>スタット</th>
+          <th>役割</th>
+          <th>補足</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank rank-s">S</span></td>
+          <td>PQ</td>
+          <td>被安打抑制。係数 0.16 で直接ヒット確率を下げる投手最強スタット。三振率にも副次的に寄与。</td>
+          <td>75+ で安定感大</td>
+        </tr>
+        <tr>
+          <td><span class="rank rank-s">S</span></td>
+          <td>PV + BRK</td>
+          <td>三振率(kP)のメイン要素（各重み0.35）。被安打抑制は単体で弱いが、三振込みだと合計インパクトは PQ 級。</td>
+          <td>両方70+推奨</td>
+        </tr>
+        <tr>
+          <td><span class="rank rank-a">A</span></td>
+          <td>OVR</td>
+          <td>被安打・被本塁打・盗塁すべてを掛け算で圧縮。先発エースに必須。</td>
+          <td>80+ 推奨</td>
+        </tr>
+        <tr>
+          <td><span class="rank rank-a">A</span></td>
+          <td>CTL</td>
+          <td>四球を抑えてイニングを稼ぐ。ローテ下位の先発でも CTL 低いと自滅しやすい。三振率にも副次的に寄与。</td>
+          <td>65+ で安定</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="tip-grid">
+      <div class="tip-box">
+        <div class="tip-head">先発ローテの組み方</div>
+        <div class="tip-body">先発 1〜2 番手は <strong>OVR + PQ + PV/BRK</strong> をバランス良く。3〜5 番手は <strong>CTL 重視</strong>で自滅を防ぐ。PV/BRK は三振率(kP)に直結するため、以前ほど「単体では弱い」とは言えなくなった。両方高い投手を最優先で確保する。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">リリーバーの評価</div>
+        <div class="tip-body">クローザーは <strong>OVR + CTL + PV/BRK</strong> が高い投手。三振で確実にアウトを取れる投手はピンチでも走者を進塁させにくい。OppwOBA でシーズン評価し、.280 以下なら信頼できる。評価値（旧SBV）マイナスが続くリリーバーは重要局面に出してはいけない。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">キャッチャーの守備力</div>
+        <div class="tip-body">catcher の守備能力（catcherAbility）が高いと <strong>catchMul が上がり</strong>、投手の全スタットが底上げされる。優秀な捕手は投手陣全体への投資と同義。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">エラー・好捕・進塁も実装済み</div>
+        <div class="tip-body">打球の一部は<strong>エラー</strong>（打者が安全進塁、走者も押し出し）や<strong>好捕</strong>（本来ヒットの当たりを好プレーでアウトに）になる。凡打・ゴロアウトでも走者が2塁→3塁・1塁→2塁へ進塁したり、フライで3塁走者がタッチアップ生還する（犠牲フライ）ことがある。三振の場合だけは走者は一切進塁しない。<br><br>本来ヒットだった打球・本来アウトだった打球、それぞれの<strong>20%は野手の守備力（DEF）判定に回される</strong>。ヒット判定の20%は好捕でアウトに、アウト判定の20%はエラーで出塁に変わりうる——つまり結果の一部は打者・投手のスタットではなく<strong>守備の責任</strong>で決まる。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">打席数と有効打席数は別カウント</div>
+        <div class="tip-body">エラー・好捕による打席は、wOBA・AVG・OppwOBA などの成績計算からは除外される「有効打席数（pa/bf）」を使う。一方で先発投手の交代タイミング（継投判定）は、除外前の<strong>生の打席数</strong>をそのままカウントする。好捕やエラーが多い試合でも、成績上は無かったことになるが、投手の球数的な負担（継投基準）にはちゃんと反映される。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TEAM ========== -->
+  <section id="team">
+    <div class="section-label">Section 05</div>
+    <h2 class="section-title">チーム編成</h2>
+
+    <div class="age-chart">
+      <div class="age-chart-title">年齢別 成長係数（_ageScore）</div>
+      <div class="age-bars" id="age-bars">
+        <!-- JS で描画 -->
+      </div>
+      <div style="display:flex;gap:4px;margin-top:6px;" id="age-labels"></div>
+      <div style="margin-top:12px;display:flex;gap:16px;font-size:12px;font-family:'Courier New',monospace;">
+        <span style="color:var(--gold);">■ 成長期（22 歳以下）</span>
+        <span style="color:var(--accent);">■ 最速育成ゾーン（23〜26）</span>
+        <span style="color:var(--accent2);">■ ピーク〜下降（27+）</span>
+      </div>
+    </div>
+
+    <div class="tip-grid">
+      <div class="tip-box">
+        <div class="tip-head">若手を育てる</div>
+        <div class="tip-body">22 歳以下の選手は成長係数 1.0 で最も伸びる。安い契約で獲得し、27〜30 歳のピークに合わせて主軸に育てるのが費用対効果最強のルート。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">スカウトのノイズ</div>
+        <div class="tip-body">スカウト評価には <strong>ノイズ（誤差）</strong>がある。TSC 総合だけで判断すると過大評価選手を高額契約する危険。可能なら個別スタットを複数シーズン観察してから長期契約する。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">ポジション適性</div>
+        <div class="tip-body">SS・C・2B・3B・1B・OF・DH の枠が決まっている。適性外配置はペナルティ（penSet）が発生し実力が低下する。ドラフト・トレード時に必ずポジションを確認。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== METRICS ========== -->
+  <section id="metrics">
+    <div class="section-label">Section 06</div>
+    <h2 class="section-title">高度指標の読み方</h2>
+
+    <p>ゲーム内に表示される wOBA・TBA・評価値（旧SBV）・ABA・TKD/SKD の意味を正しく理解することで、選手評価の精度が上がる。</p>
+
+    <h3 style="font-family:'Impact','Arial Narrow',Arial,sans-serif;font-size:20px;letter-spacing:0.06em;text-transform:uppercase;color:var(--text);margin:24px 0 12px;">wOBA 重み付け</h3>
+    <div style="max-width:500px;">
+      <div class="woba-row" style="border-top:1px solid var(--border);">
+        <div class="woba-event">四球 BB</div>
+        <div class="woba-weight">0.69</div>
+        <div class="woba-bar-wrap"><div class="woba-bar" style="width:33%"></div></div>
+      </div>
+      <div class="woba-row">
+        <div class="woba-event">単打 1B</div>
+        <div class="woba-weight">0.89</div>
+        <div class="woba-bar-wrap"><div class="woba-bar" style="width:42%"></div></div>
+      </div>
+      <div class="woba-row">
+        <div class="woba-event">二塁打 2B</div>
+        <div class="woba-weight">1.27</div>
+        <div class="woba-bar-wrap"><div class="woba-bar" style="width:60%"></div></div>
+      </div>
+      <div class="woba-row">
+        <div class="woba-event">三塁打 3B</div>
+        <div class="woba-weight">1.62</div>
+        <div class="woba-bar-wrap"><div class="woba-bar" style="width:77%"></div></div>
+      </div>
+      <div class="woba-row">
+        <div class="woba-event">本塁打 HR</div>
+        <div class="woba-weight">2.10</div>
+        <div class="woba-bar-wrap"><div class="woba-bar" style="width:100%"></div></div>
+      </div>
+    </div>
+    <p style="font-size:13px;margin-top:8px;">wOBA = (0.69×BB + 0.89×1B + 1.27×2B + 1.62×3B + 2.10×HR) ÷ PA</p>
+
+    <div class="sbv-explain">
+      <h3>評価値 — Situational Batting Value（旧称 SBV）</h3>
+      <p>1打席ごとの得点貢献を<strong>レバレッジ指数（重要度）</strong>で重み付けした累積値。実況ログに <code style="font-family:'Courier New',monospace;background:var(--code-bg);padding:1px 5px;">(変動値、累積値)</code> 形式で表示される。ゲーム内表記が「SBV」から「評価値」に変更された。</p>
+      <p>レバレッジは「点差 × アウト数 × 走者状況」で決まる。同点の満塁二死はレバレッジ最大。大差がついた局面は低くなるため、スタッツが良くても評価値が伸びにくい選手は「楽な場面専門」の可能性がある。</p>
+      <p>打撃結果ごとの基礎値：<code style="font-family:'Courier New',monospace;background:var(--code-bg);padding:1px 5px;">HR +0.23 / 3B +0.17 / 2B +0.12 / 1B +0.08 / BB +0.07 / 凡退 -0.06 / 併殺 -0.12</code>（三振も凡退と同じ -0.06 扱い）</p>
+    </div>
+
+    <div class="tip-grid">
+      <div class="tip-box">
+        <div class="tip-head">ABA / TBA とは</div>
+        <div class="tip-body">TBA（batterTBA）はヒット実績 × 0.80 ＋ 守備 × 0.13 ＋ 走力 × 0.07 の合成スコア。打撃だけでなく守備・走塁を加味した総合評価値。年俸計算の基礎にもなる。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">OppwOBA で投手評価</div>
+        <div class="tip-body">投手の被打率を wOBA で見た指標。低いほど優秀。.260 以下はエース級、.300 超は炎上リスクあり。チーム補強の際に ABA と OppwOBA を並べて比較する習慣をつける。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">TKD / SKD ＝ 推定OppwOBA</div>
+        <div class="tip-body">ローテ・救援振り分けや高度分析画面に出る投手評価値。実績ではなく<strong>平均的な打者（con/eye=48.5）を仮定してresolve()の式から逆算した推定OppwOBA</strong>を0〜100程度のスケールに変換したもの（低いOppwOBAほど高いTKD/SKD）。実績が浅い投手でも能力値から一貫した強さ比較ができる。</div>
+      </div>
+      <div class="tip-box">
+        <div class="tip-head">WAR の使い方</div>
+        <div class="tip-body">pseudoWAR はリーグ平均 wOBA からの乖離を PA で積算した近似値。1 シーズンで WAR 3.0 超は主軸、マイナスは控え相当。トレード判断の目安に使う。</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+  <!-- ========== QA ========== -->
+  <section id="qa">
+    <div class="section-label">Section 07</div>
+    <h2 class="section-title">よくある疑問 Q&amp;A</h2>
+
+    <div id="qa-list"></div>
+  </section>
+
+<script>
+const QA = [
+  {
+    q: "野手は CON 重視で正解？",
+    a: "正解。CON はすべての野手に共通する最優先スタット。理由は 3 つある。①ヒット確率の係数が最も大きい（0.26 × CON）。②75 以上でさらに +5% のボーナスが乗る明確な閾値がある。③POW・EYE の恩恵は CON が高くて初めて最大化される（POW は安打になった後で HR になる確率を上げるため、CON が低いと HR の機会自体が少ない）。加えて CON は三振率も下げるため、出塁率全体を底上げする。\n\n役割別の使い分けは「CON 75 を全員の最初のマイルストーンにした上で」、1〜2 番候補はEYEを、3〜5 番候補は POW を次の強化先にする。DEF・SPD は最後に余裕があれば上げる程度でよい。"
+  },
+  {
+    q: "CON と POW、どちらを先に上げるべき？",
+    a: "CON が 75 未満なら迷わず CON を先に上げる。75 未満の打者は安打そのものが少なく、POW が高くても HR になる機会自体が減る。CON 75 超えのボーナスを取ってから POW を伸ばすのが最も効率的。"
+  },
+  {
+    q: "三振はどう決まる？",
+    a: "打席結果として本物の \\"K\\" 判定がある（以前は「アウトのうち固定30%」という後付けの演出だけで、統計にも一切乗らなかった）。現実のMLB平均（打席の約22%）を基準に、投手の PV・BRK（各重み0.35）をメイン、PQ・CTL（各重み0.15）を副次的要素として、打者の CON・EYE で増減する。三振では走者は一切進塁しない（犠牲フライ・進塁打の判定対象外）。"
+  },
+  {
+    q: "PV と BRK、片方だけ高い投手は使える？",
+    a: "以前よりさらに厳しい。被安打抑制では +10 で -0.18% と単体で弱いが、三振率(kP)では +10 で +1.23% とメイン要素になった。両方 70 以上ある投手は被安打・三振の両面で強くなる。片方だけ高い投手は PQ・OVR が高い投手に劣ることが多いので、PV/BRK は必ずセットで評価すること。"
+  },
+  {
+    q: "wOBA と打率、どちらで打者を評価する？",
+    a: "wOBA を使う。打率は四球を出塁としてカウントせず、長打と単打を同等に扱う。wOBA は四球・二塁打・三塁打・本塁打にそれぞれ適切な重みをかけるため、実際の得点貢献を正確に反映する。.320 以上が主軸目安。"
+  },
+  {
+    q: "OVR と PQ はどちらを先に補強する？",
+    a: "失点パターンで決める。被安打が多い（走者を溜められる）なら PQ 優先（-1.8%/+10 の最大効果）。被本塁打による失点が多いなら OVR 優先（HR 確率も同時に圧縮）。三振で確実にアウトを積み重ねたいなら PV/BRK も同格で検討する。どれでもない場合は OVR が万能なので OVR から。"
+  },
+  {
+    q: "35 歳のベテランはもう使えない？",
+    a: "成長係数は 0.15 まで落ちるが、すでに高いスタットを持っていれば戦力としては十分。ただし長期契約はリスクが高い。成績が落ちてきたら若手と交代するタイミングを見極める。32〜33 歳から在庫一掃の準備を始めるのが理想。"
+  },
+  {
+    q: "評価値（旧SBV）がマイナスの選手はいらない？",
+    a: "必ずしも不要ではない。評価値はレバレッジ（試合の重要度）を掛けた値なので、大差ゲームにしか出番がない選手は積み上がりにくい。ただし重要局面で連続してマイナスを出している選手はチャンスに弱い可能性がある。wOBA と組み合わせて判断する。"
+  },
+  {
+    q: "キャッチャーの守備力はどれくらい重要？",
+    a: "非常に重要。キャッチャーの catcherAbility が高いと catchMul が上昇し、投手の PV・CTL・BRK・PQ・OVR がすべて掛け算で底上げされる（三振率にも波及する）。優秀な捕手 1 人がローテ全員の成績を改善する。投手陣への間接投資と考え、守備力の高い捕手を優先して起用すること。"
+  },
+  {
+    q: "EYE が高い選手は何番に置くべき？",
+    a: "1〜2 番が最適。EYE の四球は無条件の出塁なのでランナーを溜める役割に向く。後続の長打力がある打者（POW 高い 3〜4 番）と組み合わせることで得点効率が上がる。EYE が高くて CON も高いリードオフタイプが最高の 1 番候補。"
+  },
+  {
+    q: "スカウト評価が高くても活躍しない選手がいる、なぜ？",
+    a: "スカウト評価にはノイズ（誤差）がある。表示値と実際のスタットが最大 ±数ポイントずれている。特に若い選手は複数シーズン実績を確認してから高額長期契約を結ぶこと。TSC 総合だけでなく、個別スタット（特に CON・PQ）を必ず確認する。"
+  },
+  {
+    q: "実況を観戦せずに閉じたら結果はどうなる？",
+    a: "最後まで観戦（自動送りで試合終了）した場合はその結果がそのまま成績に記録される。観戦を途中で×閉じた場合は、既に裏側で試合全体が完全にシミュレート済みなので、その結果がそのまま記録される（別のシミュレーションに差し替わることはない）。"
+  }
+];
+
+const list = document.getElementById('qa-list');
+QA.forEach((item, i) => {
+  const el = document.createElement('div');
+  el.style.cssText = 'border-bottom:1px solid var(--border);';
+  el.innerHTML = `
+    <button onclick="toggleQA(${i}, this)" style="
+      width:100%;text-align:left;background:none;border:none;cursor:pointer;
+      padding:18px 0;display:flex;align-items:flex-start;gap:16px;
+      font-family:Georgia,'Times New Roman',serif;
+    " aria-expanded="false">
+      <span style="
+        font-family:'Courier New',monospace;font-size:12px;
+        letter-spacing:0.1em;color:var(--accent);flex-shrink:0;
+        padding-top:2px;min-width:20px;
+      ">Q.</span>
+      <span style="font-size:15px;color:var(--text);line-height:1.5;flex:1;text-align:left;">${item.q}</span>
+      <span class="qa-arrow" style="color:var(--text-muted);font-size:18px;flex-shrink:0;transition:transform 0.2s;padding-top:1px;">▸</span>
+    </button>
+    <div class="qa-answer" style="
+      display:none;padding:0 0 20px 36px;
+      font-size:14px;color:var(--text-sub);line-height:1.7;max-width:680px;
+    ">${item.a}</div>
+  `;
+  if (i === 0) el.style.borderTop = '1px solid var(--border)';
+  list.appendChild(el);
+});
+
+function toggleQA(i, btn) {
+  const answer = btn.nextElementSibling;
+  const arrow = btn.querySelector('.qa-arrow');
+  const isOpen = answer.style.display !== 'none';
+  answer.style.display = isOpen ? 'none' : 'block';
+  arrow.style.transform = isOpen ? '' : 'rotate(90deg)';
+  btn.setAttribute('aria-expanded', !isOpen);
+}
+</script>
+<script>
+// Impact bars animation
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.impact-bar[data-pct]').forEach(bar => {
+        const pct = bar.dataset.pct;
+        setTimeout(() => { bar.style.width = pct + '%'; }, 80);
+      });
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+const tbl = document.getElementById('impact-table');
+if (tbl) observer.observe(tbl);
+
+// Age chart
+const ages = [
+  {age:22,score:1.00,cls:'young'},
+  {age:23,score:0.90,cls:'young'},
+  {age:24,score:0.80,cls:'young'},
+  {age:25,score:0.70,cls:''},
+  {age:26,score:0.60,cls:''},
+  {age:27,score:0.52,cls:'peak'},
+  {age:28,score:0.44,cls:'peak'},
+  {age:29,score:0.38,cls:'peak'},
+  {age:30,score:0.32,cls:'peak'},
+  {age:31,score:0.27,cls:''},
+  {age:32,score:0.23,cls:''},
+  {age:33,score:0.20,cls:''},
+  {age:34,score:0.18,cls:''},
+  {age:35,score:0.15,cls:''},
+];
+const barsEl = document.getElementById('age-bars');
+const labelsEl = document.getElementById('age-labels');
+if (barsEl) {
+  ages.forEach(a => {
+    const col = document.createElement('div');
+    col.className = 'age-col';
+    const bar = document.createElement('div');
+    bar.className = 'age-bar-inner' + (a.cls ? ' ' + a.cls : '');
+    bar.style.height = Math.round(a.score * 72) + 'px';
+    const num = document.createElement('div');
+    num.className = 'age-num';
+    num.textContent = a.score.toFixed(2);
+    col.appendChild(bar);
+    col.appendChild(num);
+    barsEl.appendChild(col);
+
+    const lbl = document.createElement('div');
+    lbl.style.cssText = 'flex:1;min-width:28px;text-align:center;font-family:Courier New,monospace;font-size:10px;color:var(--text-muted);';
+    lbl.textContent = a.age;
+    labelsEl.appendChild(lbl);
+  });
+}
+</script>
